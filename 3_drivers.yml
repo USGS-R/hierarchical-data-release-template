@@ -1,0 +1,66 @@
+target_default: 3_driver
+
+include:
+
+packages:
+  - dplyr
+  - zip
+  - readr
+  - sf
+
+sources:
+  - src/file_functions.R
+  - src/fetch_filter_functions.R
+
+targets:
+  3_driver:
+    depends:
+       - out_data/distance_matrix_drb.csv
+       - out_data/reach_attributes_drb.csv
+       - out_data/reservoir_features_drb.csv
+       - out_data/gridmet_drb_agg_csv.zip
+       - out_data/gridmet_drb_agg_nc.zip
+       - out_data/reanalysis_gefs_drb.zip
+       - out_data/uncal_sntemp_input_output.zip
+
+  # Distance matrix
+  # from
+  out_data/distance_matrix_drb.csv:
+     command: get_distance_matrix(out_file = target_name, in_file = 'in_data/03_driver/distance_matrix.rds')
+
+  ## gridmet
+  out_data/gridmet_drb_agg_csv.zip:
+    command: file.copy(from = 'in_data/03_driver/drb_climate_2022_04_06_segments.csv', to = target_name)
+
+  out_data/gridmet_drb_agg.zip:
+    command: zip_this(out_file = target_name, .object = 'out_data/gridmet_drb_agg.csv')
+
+  out_data/gridmet_drb_agg.nc:
+    command: file.copy(from = 'in_data/03_driver/drb_climate_2022_04_06.nc', to = target_name)
+
+  out_data/gridmet_drb_agg_nc.zip:
+    command: zip_this(out_file = target_name, .object = 'out_data/gridmet_drb_agg.nc')
+
+  # Noaa gefs
+  out_data/reanalysis_gefs_drb.csv:
+    command: file.copy(from = 'in_data/03_driver/reanalysis_gefs_fy22.csv', to = target_name)
+
+  out_data/reanalysis_gefs_drb.zip:
+    command: zip_obs(out_file = target_name, in_file = 'out_data/reanalysis_gefs_fy22.csv')
+
+  # PRMS sntemp
+  out_data/uncal_sntemp_input_output.nc:
+    command: file.copy(from = 'in_data/03_driver/uncal_sntemp_input_output.nc', to = target_name)
+
+  out_data/uncal_sntemp_input_output.zip:
+    command: zip_this(out_file = target_name, .object = 'out_data/uncal_sntemp_input_output.nc')
+
+  ## reach / resevoir items - do we need this ultimately?
+  out_data/reach_attributes_drb.csv:
+    command: extract_reach_attributes(
+      res_file = 'in_data/01_spatial/segments_relative_to_reservoirs.rds',
+      attr_file = 'in_data/01_spatial/network.rds',
+      out_file = target_name)
+
+  out_data/reservoir_features_drb.csv:
+    command: file.copy(from = 'in_data/01_spatial/reservoir_features.csv', to = target_name)

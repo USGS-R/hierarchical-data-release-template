@@ -1,0 +1,74 @@
+target_default: 2_observations
+
+packages:
+  - readr
+  - zip
+  - zoo
+
+sources:
+  - src/file_functions.R
+  - src/fetch_filter_functions.R
+
+targets:
+  2_observations:
+    depends:
+      - out_data/unaggregated_temperature_observations_drb.zip
+      - out_data/aggregated_temperature_observations_drb.zip
+      - out_data/flow_observations_drb.zip
+      - out_data/reservoir_level_obs.csv
+      - out_data/reservoir_temp_obs.csv
+      - out_data/reservoir_releases_by_type_drb.csv
+      
+  # daily flow and temperature data
+  ## make sure we publish the "raw" version (unaggregated) and the "aggregated" version of 
+  ## the temperature data. Raw should be matched but not aggregated to one value per reach/day
+
+  out_data/unaggregated_temperature_observations_drb.zip:
+    command: zip_obs(out_file = target_name, in_file = 'in_data/02_observations/obs_temp_drb_raw.rds')
+  
+  out_data/aggregated_temperature_observations_drb.zip:
+    command: zip_obs(out_file = target_name, in_file = 'in_data/02_observations/obs_temp_drb.rds')
+
+  out_data/flow_observations_drb.zip:
+    command: zip_obs(out_file = target_name, in_file = 'in_data/02_observations/obs_flow_drb.rds')
+    
+  # reservoir observations
+  reservoir_modeling_site_ids:
+    command: c(I(c(
+      Pepacton = 'nhdhr_151957878',
+      Cannonsville = 'nhdhr_120022743',
+      Neversink = 'nhdhr_149269381')))
+      
+  out_data/reservoir_temp_obs.csv:
+    command: fetch_filter_tibble(
+      out_csv = target_name,
+      in_dat = 'in_data/02_observations/drb_daily_reservoir_temps.rds',
+      site_ids = reservoir_modeling_site_ids)
+    
+  out_data/reservoir_level_nwis.csv:
+    command: fetch_filter_tibble(
+      out_csv = target_name,
+      in_dat = 'in_data/02_observations/drb_reservoirs_waterlevels_munged.rds',
+      site_ids = reservoir_modeling_site_ids)
+      
+  out_data/reservoir_level_nycdep.rds:
+    command: fetch_filter_nycdep(
+      out_rds = target_name,
+      in_dat = 'in_data/02_observations/NYC_DEP_reservoir_waterlevels.rds',
+      site_ids = reservoir_modeling_site_ids)
+      
+  out_data/reservoir_level_usgs_historical.rds:
+    command: fetch_filter_historical(
+      out_rds = target_name,
+      in_dat = 'in_data/02_observations/interpolated_daily_reservoir_water_budget_components.csv',
+      xwalk = I(c('Cannonsville' = 'nhdhr_120022743', 'Pepacton' = 'nhdhr_151957878', 'Neversink' = 'nhdhr_149269381')))
+      
+  out_data/reservoir_level_obs.csv:
+    command: combine_level_sources(
+      out_csv = target_name,
+      nwis_levels = 'out_data/reservoir_level_nwis.csv',
+      nyc_levels = 'out_data/reservoir_level_nycdep.rds',
+      hist_levels = 'out_data/reservoir_level_usgs_historical.rds')
+      
+  out_data/reservoir_releases_by_type_drb.csv:
+    command: file.copy('in_data/02_observations/reservoir_releases_by_type_drb.csv', to = target_name)
