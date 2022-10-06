@@ -1,49 +1,173 @@
+include:
+  - 1_spatial.yml
+  - 2_observations.yml
+  - 3_drivers.yml
+  - 4_forecasts.yml
+
 packages:
-  - tidyverse
+  - yaml
+  - dplyr
+  - tidyr
   - meddle # at least v0.0.12
-  - scipiper
   - readr
-  - sbtools
+  - feather
+  - rgdal
+  - stringr
   - sf
+  - sbtools
+  - dssecrets
+  - scipiper
+  - tidyverse
 
 sources:
+  #- src/spatial_utils.R
   - src/sb_utils.R
-  - src/file_utils.R
+  - src/sb_functions.R
+  - src/spatial_functions.R
 
 targets:
   all:
     depends:
-      - log/sb_posted_files.csv
-    
-
-  sf_spatial_data:
-    command: st_read('example_data/example_shapefile/example_shapefile.shp')
-    depends:
-      - example_data/example_shapefile/example_shapefile.dbf
-      - example_data/example_shapefile/example_shapefile.prj
-      - example_data/example_shapefile/example_shapefile.shx
+      # - 00_parent_sb_xml
+      - log/00_parent_sb.csv
+      # - 01_spatial_sb_xml
+      - log/01_spatial_sb_data.csv
+      # - 02_observations_sb_xml
+      - log/02_observations_sb_data.csv
+      # - 03_drivers_sb_xml
+      - log/03_drivers_sb_data.csv
+      # - 04_forecasts_sb_xml
+      - log/04_forecasts_sb_data.csv
   
-  spatial_metadata:
-    command: extract_feature(sf_spatial_data)
-    
-  out_data/cars.csv:
-    command: file.copy(from = "example_data/example_cars.csv", 
-      to = target_name, overwrite = TRUE)
-  
-  out_data/spatial.zip:
-    command: sf_to_zip(zip_filename = target_name, 
-      sf_object = sf_spatial_data, layer_name = I('spatial_data'))
+# Not longer using this target as it is the fgdc metadata xml that will contain metadata info
+  # out_xml/00_parent.xml:
+  #   command: render(filename = target_name,
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_00_parent.yml")
+  #       river_metadata_verts)
 
-  out_xml/fgdc_metadata.xml:
+  # Build xml for parent item
+  out_xml/00_parent_fgdc_metadata.xml:
+    command: render(
+      filename = target_name,
+      "in_text/text_SHARED.yml",
+      "in_text/text_00_parent.yml",
+      river_metadata_segs)
+
+  ## Push metadata xml to sb
+  log/00_parent_sb.csv:
+    command: sb_replace_files(
+      filename = target_name,
+      sb_id = sbid_00_parent,
+      sources = 'src/sb_utils.R',
+      'out_xml/00_parent_fgdc_metadata.xml')
+
+  ## Original xml metadata target for parent - Leaving out for now
+  # 00_parent_sb_xml:
+  #   command: sb_render_post_xml(sbid_00_parent,
+  #     xml_file = I('00_parent.xml'),
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_00_parent.yml",
+  #     river_metadata_verts)
+
+  ## Build xml for spatial
+  out_xml/01_spatial_fgdc_metadata.xml:
     command: render(filename = target_name,
-      "in_text/text_data_release.yml",
-      spatial_metadata)
-    
-  log/sb_posted_files.csv:
-    command: sb_replace_files(filename = target_name, 
-      sb_id = I('5faaac68d34eb413d5df1f22'),
-      "out_data/spatial.zip",
-      "out_data/cars.csv",
-      "out_xml/fgdc_metadata.xml",
-      sources = "src/sb_utils.R")
-      
+      "in_text/text_SHARED.yml",
+      "in_text/text_01_spatial.yml",
+      river_metadata_segs)
+
+  ## Push all spatial data + metadata xml to sb
+  log/01_spatial_sb_data.csv:
+    command: sb_replace_files(
+      filename = target_name,
+      sb_id = sbid_01_spatial,
+      sources = 'src/sb_utils.R',
+      "out_data/study_stream_reaches.zip",
+      "out_data/study_reservoirs.zip",
+      "out_data/study_monitoring_sites.zip",
+      'out_xml/01_spatial_fgdc_metadata.xml')
+
+  ## original xml metadata target for spatial - Leaving out for now
+  # 01_spatial_sb_xml:
+  #   command: sb_render_post_xml(
+  #     sbid_01_spatial,
+  #     xml_file = I('01_spatial_sb.xml'),
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_01_spatial.yml",
+  #     river_metadata_segs)
+
+  ## build metadata xml for observations
+  out_xml/02_observations_fgdc_metadata.xml:
+    command: render(filename = target_name,
+      "in_text/text_SHARED.yml",
+      "in_text/text_02_observations.yml",
+      river_metadata_segs)
+
+  ## Push all obs data + metadata xml to sb
+  log/02_observations_sb_data.csv:
+    command: sb_replace_files(
+      filename = target_name,
+      sb_id = sbid_02_observations,
+      sources = 'src/sb_utils.R',
+      'out_data/unaggregated_temperature_observations_drb.zip',
+      'out_data/aggregated_temperature_observations_drb.zip',
+      'out_data/flow_observations_drb.zip',
+      "out_data/reservoir_temp_obs.csv",
+      "out_data/reservoir_level_obs.csv",
+      "out_data/reservoir_releases_by_type_drb.csv",
+      'in_data/02_observations/reservoir_diversions.csv',
+      'out_xml/02_observations_fgdc_metadata.xml')
+
+  ## original xml metadata target for spatial - Leaving out for now
+  # 02_observations_sb_xml:
+  #   command: sb_render_post_xml(sbid_02_observations,
+  #     xml_file = I('02_observations.xml'),
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_02_observations.yml",
+  #     river_metadata_segs)
+
+  ## Build metadata xml for driver data
+  out_xml/03_driver_fgdc_metadata.xml:
+    command: render(filename = target_name,
+      "in_text/text_SHARED.yml",
+      "in_text/text_03_driver.yml",
+      river_metadata_segs
+      )
+
+  ## Push all obs data + xml to sb
+  log/03_driver_sb_data.csv:
+    command: sb_replace_files(
+      filename = target_name,
+      sb_id = sbid_03_driver,
+      sources = 'src/sb_utils.R',
+      'out_data/distance_matrix_drb.csv',
+      'out_data/gridmet_drb_agg_csv.zip',
+      'out_data/gridmet_drb_agg_nc.zip',
+      'out_data/reanalysis_gefs_drb.zip',
+      'out_data/uncal_sntemp_input_output.zip',
+      'out_xml/03_driver_fgdc_metadata.xml'
+      )
+
+  # 03_driver_sb_xml:
+  #   command: sb_render_post_xml(sbid_03_driver,
+  #     xml_file = I('03_driver.xml'),
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_03_driver.yml")
+  #      river_metadata_verts
+
+  # ------ SB IDs --------
+
+  sbid_00_parent:
+    command: c(I('623e4418d34e915b67d7dd78'))
+
+  sbid_01_spatial:
+    command: c(I('623e54c4d34e915b67d83580'))
+
+  sbid_02_observations:
+    command: c(I('623e550ad34e915b67d8366e'))
+
+  sbid_03_driver:
+    command: c(I('623e5587d34e915b67d83806'))
+
+
