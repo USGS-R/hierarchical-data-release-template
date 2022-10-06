@@ -82,11 +82,10 @@ targets:
     command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_01_spatial,
-      sources = 'src/sb_utils.R',
-      "out_data/study_stream_reaches.zip",
-      "out_data/study_reservoirs.zip",
-      "out_data/study_monitoring_sites.zip",
-      'out_xml/01_spatial_fgdc_metadata.xml')
+      sources = "src/sb_utils.R",
+      "out_data/XX_spatial1.zip",
+      "out_data/XX_spatial2.zip",
+      "out_xml/01_spatial_fgdc_metadata.xml")
 
   ## original xml metadata target for spatial - Leaving out for now
   # 01_spatial_sb_xml:
@@ -104,22 +103,17 @@ targets:
       "in_text/text_02_observations.yml",
       river_metadata_segs)
 
-  ## Push all obs data + metadata xml to sb
+  ## Push all observations data + metadata xml to sb
   log/02_observations_sb_data.csv:
     command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_02_observations,
-      sources = 'src/sb_utils.R',
-      'out_data/unaggregated_temperature_observations_drb.zip',
-      'out_data/aggregated_temperature_observations_drb.zip',
-      'out_data/flow_observations_drb.zip',
-      "out_data/reservoir_temp_obs.csv",
-      "out_data/reservoir_level_obs.csv",
-      "out_data/reservoir_releases_by_type_drb.csv",
-      'in_data/02_observations/reservoir_diversions.csv',
-      'out_xml/02_observations_fgdc_metadata.xml')
+      sources = "src/sb_utils.R",
+      "out_data/XX_observations1.zip",
+      "out_data/XX_observations2.zip",
+      "out_xml/02_observations_fgdc_metadata.xml")
 
-  ## original xml metadata target for spatial - Leaving out for now
+  ## original xml metadata target for observations - Leaving out for now
   # 02_observations_sb_xml:
   #   command: sb_render_post_xml(sbid_02_observations,
   #     xml_file = I('02_observations.xml'),
@@ -128,46 +122,62 @@ targets:
   #     river_metadata_segs)
 
   ## Build metadata xml for driver data
-  out_xml/03_driver_fgdc_metadata.xml:
+  out_xml/03_drivers_fgdc_metadata.xml:
     command: render(filename = target_name,
       "in_text/text_SHARED.yml",
-      "in_text/text_03_driver.yml",
+      "in_text/text_03_drivers.yml",
       river_metadata_segs
       )
 
-  ## Push all obs data + xml to sb
-  log/03_driver_sb_data.csv:
+  ## Push all driver data + xml to sb
+  log/03_drivers_sb_data.csv:
     command: sb_replace_files(
       filename = target_name,
-      sb_id = sbid_03_driver,
+      sb_id = sbid_03_drivers,
       sources = 'src/sb_utils.R',
-      'out_data/distance_matrix_drb.csv',
-      'out_data/gridmet_drb_agg_csv.zip',
-      'out_data/gridmet_drb_agg_nc.zip',
-      'out_data/reanalysis_gefs_drb.zip',
-      'out_data/uncal_sntemp_input_output.zip',
-      'out_xml/03_driver_fgdc_metadata.xml'
+      'out_data/XX_drivers1.zip',
+      'out_data/XX_drivers2.zip',
+      'out_xml/03_drivers_fgdc_metadata.xml'
       )
 
-  # 03_driver_sb_xml:
-  #   command: sb_render_post_xml(sbid_03_driver,
-  #     xml_file = I('03_driver.xml'),
+  # 03_drivers_sb_xml:
+  #   command: sb_render_post_xml(sbid_03_drivers,
+  #     xml_file = I('03_drivers.xml'),
   #     "in_text/text_SHARED.yml",
-  #     "in_text/text_03_driver.yml")
+  #     "in_text/text_03_drivers.yml")
   #      river_metadata_verts
+
+  ## Push all forecast data + xml to sb
+  log/04_forecasts_sb_data.csv:
+    command: sb_replace_files(
+      filename = target_name,
+      sb_id = sbid_04_forecasts,
+      sources = 'src/sb_utils.R',
+      'out_data/XX_forecasts1.zip',
+      'out_data/XX_forecasts2.zip',
+      )
+
+  # 04_forecasts_sb_xml:
+  #   command: sb_render_post_xml(sbid_04_forecasts,
+  #     xml_file = I('04_forecasts.xml'),
+  #     "in_text/text_SHARED.yml",
+  #     "in_text/text_04_forecasts.yml")
+  #      river_metadata_verts
+
 
   # ------ SB IDs --------
 
   sbid_00_parent:
-    command: c(I('623e4418d34e915b67d7dd78'))
+    command: c(I('XX_sb_id_parent'))
 
   sbid_01_spatial:
-    command: c(I('623e54c4d34e915b67d83580'))
+    command: c(I('XX_sb_id_spatial'))
 
   sbid_02_observations:
-    command: c(I('623e550ad34e915b67d8366e'))
+    command: c(I('XX_sb_id_observations'))
 
-  sbid_03_driver:
-    command: c(I('623e5587d34e915b67d83806'))
+  sbid_03_drivers:
+    command: c(I('XX_sb_id_drivers'))
 
-
+  sbid_04_forecasts:
+    command: c(I('XX_sb_id_forecasts'))
