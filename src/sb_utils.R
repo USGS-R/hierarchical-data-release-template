@@ -163,3 +163,16 @@ sb_secret_login <- function(){
     sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
   }
 }
+
+
+sb_render_post_xml <- function(sb_id, ..., xml_file = NULL){
+  
+  if (is.null(xml_file)){
+    xml_file <- file.path(tempdir(), paste0(sb_id,'.xml'))
+  }
+  
+  render(filename = xml_file, ...)
+  
+  sb_replace_files(sb_id = sb_id, xml_file)
+  
+}
