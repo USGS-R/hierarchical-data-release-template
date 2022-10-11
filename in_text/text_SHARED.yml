@@ -1,0 +1,71 @@
+authors: ["XX_NAME_1", "XX_NAME_2"]
+pubdate: XXXX # year of publication for data release
+doi: https://doi.org/YY.XXXXX/XXXXXX
+build-environment: !expr meddle::environment_metadata()
+
+# ----supporting publications, source code, data releases----
+cross-cites:
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+      XX # title of cited item
+    pubdate: XXXX # year of publication for cited item
+    link: http://doi.org/YY.XXXXX/XXXXXX
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+      XX # title of cited item
+    pubdate: XXXX # year of publication for cited item
+    link: http://doi.org/YY.XXXXX/XXXXXX
+
+
+purpose: XX - intended usage of data release
+start-date: XXXXXXXX - earliest date of data included in data release, in the format YYYYMMDD
+end-date: XXXXXXXX - latest date of data included in data release, in the format YYYYMMDD
+
+update: XX - any updates planned for the data release, can use "none planned"
+themekeywords: ["XX_keyword_1","XX_keyword_2"]  # keyword reference: https://www.usgs.gov/data-management/keywords
+usage-rules: >-
+  These data are subject to change and are not citable until reviewed and approved for official publication by the USGS
+
+descgeog: "XX - description of the geographic coverage of the dataset"
+data-publisher: U.S. Geological Survey
+indirect-spatial: U.S.A.
+latitude-res: XX - lat resolution in degrees
+longitude-res: XX - lon resolution in degrees
+
+# ----contacts----
+contact-person: XX # name of lead modeler to contact with questions
+contact-phone: XXX-XX-XXXX
+contact-email: XXXXXXX@usgs.gov
+contact-position: XX # job title
+contact-address: "XX" # office address
+contact-city: XX # city of office 
+contact-state: XX # state of office
+contact-zip: XXXXX # zip code of office
+
+metadata-person: XX # name of lead for metadata creation, often the person facilitating the data release
+metadata-phone: XXX-XX-XXXX
+metadata-fax: XXX-XX-XXXX
+metadata-email: XXXXXXX@usgs.gov
+metadata-position: XX # job title
+metadata-address: "XX" # office address
+metadata-city: XX # city of office 
+metadata-state: XX # state of office 
+metadata-zip: XXXXX # zip code of office
+metadata-date: XXXXXXXX # data of metadata creation for data release, in the format YYYYMMDD
+
+accur-test: No formal attribute accuracy tests were conducted.
+funding-credits: >-
+  This study was funded by the United States Geological Survey.
+  This research used resources of the Core Science Analytics and Synthesis Advanced Research Computing program at the U.S. Geological Survey.
+
+process-description: >-
+  XX # a description of the processing
+
+distro-person: XX # name of lead modeler to contact with questions
+liability-statement: >-
+  Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected.
+  Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey (USGS),
+  no warranty expressed or implied is made regarding the display or utility of the data on any other system or for general or scientific purposes, nor shall
+  the act of distribution constitute any such warranty.
