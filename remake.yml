@@ -168,16 +168,16 @@ targets:
   # ------ SB IDs --------
 
   sbid_00_parent:
-    command: c(I('XX_sb_id_parent'))
+    command: c(I('61ddfd54d34ed79294021ad8')) # #XX_sb_id_parent
 
   sbid_01_spatial:
-    command: c(I('XX_sb_id_spatial'))
+    command: c(I('636187b3d34ebe44250656b0')) #XX_sb_id_spatial
 
   sbid_02_observations:
-    command: c(I('XX_sb_id_observations'))
+    command: c(I('636187ced34ebe44250656b3')) #XX_sb_id_observations
 
   sbid_03_drivers:
-    command: c(I('XX_sb_id_drivers'))
+    command: c(I('6361881bd34ebe44250656b8')) #XX_sb_id_drivers 
 
   sbid_04_forecasts:
-    command: c(I('XX_sb_id_forecasts'))
+    command: c(I('6361882ed34ebe44250656ba')) #XX_sb_id_forecasts
