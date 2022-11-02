@@ -1,4 +1,4 @@
-target_default: 3_driver
+target_default: 4_forecasts
 
 include:
 
@@ -20,8 +20,8 @@ targets:
 
   # Forecast dataset 1
   out_data/XX_forecasts1.zip:
-    command: zip_this(out_file = target_name, .object = 'out_data/XX_forecasts1.csv')
+    command: zip_this(out_file = target_name, .object = 'in_data/example_data/predictions_data_1.csv')
   
   # Forecast dataset 2
-  out_data/XX_forecasts2.nc:
-    command: file.copy(from = 'in_data/03_drivers/XX_forecasts2.nc', to = target_name)
+  out_data/XX_forecasts2.zip:
+    command: zip_this(out_file = target_name, .object = 'in_data/example_data/predictions_data_2.csv')

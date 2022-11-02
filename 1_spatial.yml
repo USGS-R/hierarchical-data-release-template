@@ -13,56 +13,19 @@ sources:
 targets:
   1_spatial:
     depends:
-      - out_data/study_stream_reaches.zip
-      - river_metadata_verts
-      - river_metadata_segs
-      - reservoir_metadata
-      - out_data/study_reservoirs.zip
-      - out_data/study_monitoring_sites.zip
+      - out_data/XX_geospatial_area_WG84.zip
+      - geospatial_area_metadata
   
-  # River network segments and vertices0 
-  modeled_network_sf:
-    command: retrieve_network(network_sf_fl = 'in_data/01_spatial/network.rds')
-    
-  network_vertices_sf:
-    command: retrieve_vertices(network_sf_fl = 'in_data/01_spatial/network.rds')
-  
-  # River metadata   
-  river_metadata_segs:
-    command: extract_feature(modeled_network_sf)
-    
-  river_metadata_verts:
-    command: extract_feature(network_vertices_sf)
-  
-  # Output river network shp
-  out_data/study_stream_reaches.zip:
-    command: sf_to_zip(target_name,
-      sf_object = modeled_network_sf,
-      layer_name = I('study_stream_reaches'))
+  # create target of spatial file
+  geospatial_area_WG84:
+    command: read_spatial_file(path = 'in_data/example_data/drb_shp/physiographic_regions_DRB.shp', selected_crs = 4326)
 
-  # Reservoir polygons
-  reservoir_polygons:
-    command: fetch_filter_res_polygons(
-      out_rds = target_name,
-      in_dat = "in_data/01_spatial/canonical_lakes_sf.rds",
-      in_repo = NULL,
-      site_ids = reservoir_modeling_site_ids)
-  
-  # Reservoir polygons metadata    
-  reservoir_metadata:
-    command: extract_feature(reservoir_polygons)
+  # grab metadata   
+  geospatial_area_metadata:
+    command: extract_feature(geospatial_area_WG84)
     
-  # output reservoir shp
-  out_data/study_reservoirs.zip:
-    command: sf_to_zip2(zip_filename = target_name,
-      sf_object = reservoir_polygons,
-      layer_name = I('study_reservoirs'))
-    
-  ## Monitoring Sites
-  monitoring_sites:
-    command: readRDS(file = 'in_data/01_spatial/drb_filtered_sites_qa.rds')
-    
-  out_data/study_monitoring_sites.zip:
-    command: reduce_and_zip(zip_filename = target_name, 
-      in_dat = monitoring_sites,
-      layer_name = I('study_monitoring_sites'))
+  # Output geospatial area shp
+  out_data/XX_geospatial_area_WG84.zip:
+    command: sf_to_zip(target_name,
+      sf_object = geospatial_area_WG84,
+      layer_name = I('geospatial_area_WG84'))

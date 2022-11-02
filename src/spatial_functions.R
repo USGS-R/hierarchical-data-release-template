@@ -36,23 +36,24 @@ sf_to_zip <- function(zip_filename, sf_object, layer_name){
   zip::zip(file.path(cdir, zip_filename), files = files_to_zip)
   setwd(cdir)
 }
-sf_to_zip2 <- function(zip_filename, sf_object, layer_name){
-  cdir <- getwd()
-  on.exit(setwd(cdir))
-  dsn <- tempdir()
-
-  sf::st_write(sf_object, dsn = dsn, layer = layer_name, driver="ESRI Shapefile", delete_dsn=TRUE) # overwrites
-
-  files_to_zip <- data.frame(filepath = dir(dsn, full.names = TRUE), stringsAsFactors = FALSE) %>%
-    mutate(filename = basename(filepath)) %>%
-    filter(grepl(pattern = layer_name, x = filename)) %>%
-    pull(filename)
-
-  setwd(dsn)
-  # zip::zip works across platforms
-  zip::zip(file.path(cdir, zip_filename), files = files_to_zip)
-  setwd(cdir)
-}
+# 
+# sf_to_zip2 <- function(zip_filename, sf_object, layer_name){
+#   cdir <- getwd()
+#   on.exit(setwd(cdir))
+#   dsn <- tempdir()
+# 
+#   sf::st_write(sf_object, dsn = dsn, layer = layer_name, driver="ESRI Shapefile", delete_dsn=TRUE) # overwrites
+# 
+#   files_to_zip <- data.frame(filepath = dir(dsn, full.names = TRUE), stringsAsFactors = FALSE) %>%
+#     mutate(filename = basename(filepath)) %>%
+#     filter(grepl(pattern = layer_name, x = filename)) %>%
+#     pull(filename)
+# 
+#   setwd(dsn)
+#   # zip::zip works across platforms
+#   zip::zip(file.path(cdir, zip_filename), files = files_to_zip)
+#   setwd(cdir)
+# }
 
 reduce_and_zip <- function(zip_filename, in_dat, layer_name) {
   out <- in_dat %>%
@@ -70,4 +71,12 @@ reduce_and_zip <- function(zip_filename, in_dat, layer_name) {
     st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 
   sf_to_zip2(zip_filename = zip_filename, sf_object = out, layer_name = layer_name)
+}
+
+
+read_spatial_file <- function(path, selected_crs){
+  out <- sf::read_sf(path) %>% 
+    sf::st_transform(read_file,  crs = selected_crs)
+  
+  return(out)
 }

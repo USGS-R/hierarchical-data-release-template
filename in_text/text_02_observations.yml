@@ -1,12 +1,12 @@
 title: >-
-  XX # child item page title here
+  XX # observations data item title
 
 abstract: >-
   XX # a description of the subset of data contained in this child item
 
 cross-cites:
   -
-  authors: ["XX_NAME_1", "XX_NAME_2"]
+    authors: ["XX_NAME_1", "XX_NAME_2"]
     title: >-
       XX - title of cited item
     pubdate: XXXX - year of publication for cited item
