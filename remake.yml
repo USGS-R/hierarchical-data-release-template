@@ -20,7 +20,6 @@ packages:
   - tidyverse
 
 sources:
-  - src/spatial_utils.R
   - src/sb_utils.R
   - src/sb_functions.R
   - src/spatial_functions.R
