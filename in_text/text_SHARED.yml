@@ -19,7 +19,7 @@ cross-cites:
     link: http://doi.org/YY.XXXXX/XXXXXX
 
 
-purpose: XX # intended usage of data release
+purpose: XX # intended usage of data release (e.g.: Decision support, limnological research, water quality, reservoir management.)
 start-date: XXXXXXXX # earliest date of data included in data release, in the format YYYYMMDD
 end-date: XXXXXXXX # latest date of data included in data release, in the format YYYYMMDD
 
