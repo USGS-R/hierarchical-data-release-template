@@ -3,15 +3,14 @@ title: >-
 
 abstract: >-
   XX # a description of this data release
-  
-  
-  The data are stored in 4 child folders: 1) spatial information, 2) observations, and 3) model driver data, 4) predictions
+  <br> 
+  The data are stored in 4 child folders: 1) spatial information, 2) observations, and 3) driver data, 4) forecasts
 
-  <li><a href="https://www.sciencebase.gov/catalog/item/636187b3d34ebe44250656b0"> 1) Spatial Information </a>- Spatial data describing XX </li>
-  <li><a href="https://www.sciencebase.gov/catalog/item/636187ced34ebe44250656b3"> 2) Observations </a>- [CHANGE] Observations data describing XX </li>   
-  <li><a href="https://www.sciencebase.gov/catalog/item/6361881bd34ebe44250656b8"> 3) Driver data </a>- Driver data used by XX models </li>  
-  <li><a href="https://www.sciencebase.gov/catalog/item/XX"> 3) Forecasted data </a> Model predictions XX </li> 
-  
+  <li><a href="https://www.sciencebase.gov/catalog/item/636187b3d34ebe44250656b0"> 1) Spatial Information </a>- Spatial data describing XX (CHANGE hyperlink) </li>
+  <li><a href="https://www.sciencebase.gov/catalog/item/636187ced34ebe44250656b3"> 2) Observations </a>- Observations data describing XX (CHANGE hyperlink) </li>   
+  <li><a href="https://www.sciencebase.gov/catalog/item/6361881bd34ebe44250656b8"> 3) Driver data </a>- Driver data used by XX models (CHANGE hyperlink)</li>  
+  <li><a href="https://www.sciencebase.gov/catalog/item/6361882ed34ebe44250656ba"> 3) Forecasted data </a> Model predictions XX (+ CHANGE hyperlink)</li> 
+  <br>
   This data compilation was funded by the USGS, XX.
 
 # ----supporting publications, source code, data releases----
