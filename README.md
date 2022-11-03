@@ -31,21 +31,21 @@ Need to have CRAN package `sbtools` installed
 
 All Science Base items and child items should have an associated metadata page build in a yaml. They are saved in `in_text` folder and should match the respective parent and/or child data yamls. E.g. the metadata file for the output files stored in 1_spatial.yml is in `./in_text/text_01_spatial.yml`.
 
-Please build your metadata work off the pre-populated metadata templates that meet the fgdc structure and map to the expected xml on science base. 
+Please build your metadata work off the pre-populated metadata templates that meet the fgdc structure and map to the expected xml on sciencebase.gov. 
 
 ### Remake
 
 * Remake.yml
-The purpose of the remake yaml file assembles are relevant targets and uploads  to Science Base (much like a `_targets.R` file in a targets pipeline).
-Unlike the flat structure,  data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the Science Base uploads.
+The purpose of the remake yaml file assembles are relevant targets and uploads to Science Base (much like a `_targets.R` file in a targets pipeline).
+Unlike the flat structure, data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the Science Base uploads.
 
 
 * Two ways to push to Science Base: 
 
 Remake yml is the single source for uploads to sciencebase, and there are two ways to do this in the template. 
-The more simple method pushes the data and metadata in two separate targets using and `XX_sb_data` `XX_sb_xml` via functions `sb_render_post_xml()` (transforms to xml and pushes to SB) and `sb_replace_files` (pushes datafiles to SB)
+The more simple *first method* pushes the data and metadata in two separate targets using and `XX_sb_data` `XX_sb_xml` via functions `sb_render_post_xml()` (transforms to xml and pushes to SB) and `sb_replace_files` (pushes datafiles to SB)
 
-The second method uploads data and the xml (metadata) and data at the same time. This upload approach uses an internal task table (log) where you can specify all files that should be pushed to the same sbid at one time. Again, because the upload step uses an internal task table, data files aren't replaced everytime you fix a metadata typo or add information to a metadata field. The result of the sciencebase push step is a file with timestamps for when each file got pushed that can be checked into GitHub. Having the file with timestamps in GitHub will clearly show when updates were made and will render nicely without having to build the object target locally.
+The *second method* uploads data and the xml (metadata) and data at the same time. This upload approach uses an internal task table (log) where you can specify all files that should be pushed to the same sbid at one time. Again, because the upload step uses an internal task table, data files aren't replaced everytime you fix a metadata typo or add information to a metadata field. The result of the sciencebase push step is a file with timestamps for when each file got pushed that can be checked into GitHub. Having the file with timestamps in GitHub will clearly show when updates were made and will render nicely without having to build the object target locally.
 
 Depending on what approach you choose, make sure to comment out the irrelevant code chunks and targets:
 
