@@ -37,7 +37,7 @@ Please build your metadata work off the pre-populated metadata templates that me
 
 * Remake.yml
 The purpose of the remake yaml file assembles are relevant targets and uploads  to Science Base (much like a `_targets.R` file in a targets pipeline).
-Unlike the flat structure,  data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the ScienceBase uploads.
+Unlike the flat structure,  data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the Science Base uploads.
 
 
 * Two ways to push to Science Base: 
