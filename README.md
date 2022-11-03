@@ -31,13 +31,13 @@ Need to have CRAN package `sbtools` installed
 
 All Science Base items and child items should have an associated metadata page build in a yaml. They are saved in `in_text` folder and should match the respective parent and/or child data yamls. E.g. the metadata file for the output files stored in 1_spatial.yml is in `./in_text/text_01_spatial.yml`.
 
-Please build your metadata work off the pre-populated metadata templates that meet the fgdc structure and map to the expected xml on science base. 
+Please build your metadata work off the pre-populated metadata templates that meet the fgdc structure and map to the expected xml on sciencebase.gov. 
 
 ### Remake
 
 * Remake.yml
-The purpose of the remake yaml file assembles are relevant targets and uploads  to Science Base (much like a `_targets.R` file in a targets pipeline).
-Unlike the flat structure,  data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the Science Base uploads.
+The purpose of the remake yaml file assembles are relevant targets and uploads to Science Base (much like a `_targets.R` file in a targets pipeline).
+Unlike the flat structure, data munging, manipulation, and file writing happens in the child item yml in the hierarchical data release repo structure. However, additional processing can also happen in the remake file in addition to the Science Base uploads.
 
 
 * Two ways to push to Science Base: 
