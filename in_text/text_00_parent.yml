@@ -1,0 +1,38 @@
+title: >-
+  XX # overall data release title here
+
+abstract: >-
+  XX # a description of this data release
+
+# ----supporting publications, source code, data releases----
+cross-cites:
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+        XX # title of cited item
+    pubdate: XXXX # year of publication for cited item
+    link: http://doi.org/YY.XXXXX/XXXXXX
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+        XX # title of cited item
+    pubdate: XXXX # year of publication for cited item
+    link: http://doi.org/YY.XXXXX/XXXXXX
+
+entities:
+  -
+    data-name: Parent metadata landing page
+    data-description: >-
+      This is the landing page for XX other data release units
+
+build-environment: Multiple computer operating systems were used to generate these data, including Windows, linux, OSX. The open source languages R and Python were used on all systems.
+
+process-date: !expr format(Sys.time(),'%Y%m%d')
+indirect-spatial: U.S.A.
+latitude-res: XX # lat resolution in degrees
+longitude-res: XX # lon resolution in degrees
+data-description: >-
+  This is the landing page for the other data release units, described in the attributes section
+file-format: parent data item for released data products
+process-description: >-
+  This is the landing page for the other data release units; processing descriptions can be found on each child item.

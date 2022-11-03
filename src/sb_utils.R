@@ -6,7 +6,7 @@
 #' @param file_hash a yaml file with filepath and hash value pairs. All files named in the 
 #' `file_hash` will be uploaded to sciencebase
 #' @param sources filepath(s) for where all of the functions that are needed for running 
-#' `sb_replace_files` exsit. For example, where `sb_replace_files`, `sb_render_post_xml`, 
+#' `sb_replace_files_log` exist. For example, where `sb_replace_files`, `sb_render_post_xml`, 
 #' `do_item_replace_tasks`, `upload_and_record`, and `combine_upload_times` are defined. It 
 #' is recommended to put them all in the same file.
 #' 
@@ -18,7 +18,7 @@
 #' treated as a dependency. If you feel the need to put `sources = I(c('file1.R','file2.R'))` note that 
 #' remake won't track the contents of the files to trigger re-builds, just the file names (because of the I()).
 #' I would suggest keeping every function and variable you need in one source file for this pattern
-sb_replace_files <- function(filename, sb_id, ..., file_hash, sources = c()){
+sb_replace_files_log <- function(filename, sb_id, ..., file_hash, sources = c()){
   
   files <- c(...)
   
@@ -162,4 +162,41 @@ sb_secret_login <- function(){
     sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
     sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
   }
+}
+
+
+sb_render_post_xml <- function(sb_id, ..., xml_file = NULL){
+  
+  if (is.null(xml_file)){
+    xml_file <- file.path(tempdir(), paste0(sb_id,'.xml'))
+  }
+  
+  render(filename = xml_file, ...)
+  
+  sb_replace_files(sb_id = sb_id, xml_file)
+  
+}
+
+
+sb_replace_files <- function(sb_id, ..., file_hash){
+  
+  if (!sbtools::is_logged_in()){
+    
+    sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
+    sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
+    
+  }
+  
+  hashed_filenames <- c()
+  if (!missing(file_hash)){
+    hashed_filenames <- yaml.load_file(file_hash) %>% names %>% sort() %>% rev()
+    for (file in hashed_filenames){
+      item_replace_files(sb_id, files = file)
+    }
+  }
+  files <- c(...)
+  if (length(files) > 0){
+    item_replace_files(sb_id, files = files)
+  }
+  
 }

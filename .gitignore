@@ -2,9 +2,13 @@
 .Rhistory
 .RData
 .Ruserdata
+.RProj
 .DS_Store
-.remake
 
-out_data/*.csv
-out_data/*.zip
-out_xml/*.xml
+out_data/*
+!out_data/.empty
+
+in_data/*
+!in_data/.empty
+
+.remake/*

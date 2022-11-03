@@ -1,0 +1,27 @@
+target_default: 4_forecasts
+
+include:
+
+packages:
+  - dplyr
+  - zip
+  - readr
+  - sf
+
+sources:
+  - src/file_functions.R
+  - src/fetch_filter_functions.R
+
+targets:
+  3_driver:
+    depends:
+       - out_data/XX_forecasts1.zip
+       - out_data/XX_forecasts2.zip
+
+  # Forecast dataset 1
+  out_data/XX_forecasts1.zip:
+    command: zip_this(out_file = target_name, .object = 'in_data/example_data/predictions_data_1.csv')
+  
+  # Forecast dataset 2
+  out_data/XX_forecasts2.zip:
+    command: zip_this(out_file = target_name, .object = 'in_data/example_data/predictions_data_2.csv')

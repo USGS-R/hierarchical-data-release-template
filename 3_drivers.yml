@@ -1,0 +1,32 @@
+target_default: 3_drivers
+
+include:
+
+packages:
+  - dplyr
+  - zip
+  - readr
+  - sf
+
+sources:
+  - src/file_functions.R
+  - src/fetch_filter_functions.R
+
+targets:
+  3_drivers:
+    depends:
+       - out_data/XX_driver_data_1.zip
+       - out_data/XX_driver_data_2.zip
+       
+  ## Gridmet
+  out_data/driver_data_1.csv:
+    command: file.copy(from = 'in_data/example_data/gridmet_sample1.csv', to = target_name)
+    
+  out_data/XX_driver_data_1.zip:
+    command: zip_this(out_file = target_name, .object = 'out_data/driver_data_1.csv')
+
+  out_data/driver_data_2.csv:
+    command: file.copy(from = 'in_data/example_data/gridmet_sample2.csv', to = target_name)
+    
+  out_data/XX_driver_data_2.zip:
+    command: zip_this(out_file = target_name, .object = 'out_data/driver_data_2.csv')

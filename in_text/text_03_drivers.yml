@@ -1,0 +1,72 @@
+title: >-
+  XX # driver data item title
+
+abstract: >-
+  XX # a description of the subset of data contained in this child item
+
+cross-cites:
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+      XX - title of cited item
+    pubdate: XXXX - year of publication for cited item
+    link: https://doi.org/YY.XXXXX/XXXXXX
+  -
+    authors: ["XX_NAME_1", "XX_NAME_2"]
+    title: >-
+        XX - title of cited item
+    pubdate: XXXX - year of publication for cited item
+    link: http://doi.org/YY.XXXXX/XXXXXX
+
+entities:
+  -
+    data-name: XX_drivers1.zip
+    data-description: >-
+      XX # description of data in file 1
+    attributes:
+    -
+      attr-label: XX # name of attribute 1
+      attr-def: >-
+        XX # description of attribute 1
+      attr-defs: XX # location where attributes are deinfed - can be "This data release" or a link to another data source page
+      data-min: XX
+      data-max: XX
+      data-units: XX
+    -
+      attr-label: XX # name of attribute 2
+      attr-def: >-
+        XX # description of attribute 2
+      attr-defs: XX # location where attributes are deinfed - can be "This data release" or a link to another data source page
+      data-min: XX
+      data-max: XX
+      data-units: XX
+  -
+    data-name: XX_drivers2.zip
+    data-description: >-
+      XX # description of data in file 2
+    attributes:
+    -
+      attr-label: XX # name of attribute 1
+      attr-def: >-
+        XX # description of attribute 1
+      attr-defs: XX # location where attributes are deinfed - can be "This data release" or a link to another data source page
+      data-min: XX
+      data-max: XX
+      data-units: XX
+    -
+      attr-label: XX # name of attribute 2
+      attr-def: >-
+        XX # description of attribute 2
+      attr-defs: XX # location where attributes are deinfed - can be "This data release" or a link to another data source page
+      data-min: XX
+      data-max: XX
+      data-units: XX
+
+process-date: !expr format(Sys.time(),'%Y%m%d')
+file-format: XX # format of data files in this subset, e.g. a single comma-delimited file and a single zipped shapefile
+process-description: >-
+  XX # a description of the processing for this subset of the data release
+
+indirect-spatial: U.S.A.
+latitude-res: XX # lat resolution in degrees
+longitude-res: XX # lon resolution in degrees
