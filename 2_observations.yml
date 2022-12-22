@@ -15,6 +15,6 @@ targets:
       - out_data/XX_observations.zip
 
   # daily flow and temperature data
-  out_data/XX_observations.zip:
+  out_data/02_observations.zip:
     command: zip_obs(out_file = target_name, in_file = 'in_data/example_data/example_temp_drb_220101.csv')
  
