@@ -33,6 +33,31 @@ sb_replace_files_log <- function(filename, sb_id, ..., file_hash, sources = c())
     write_csv(filename)
 }
 
+
+sb_replace_files <- function(sb_id, ..., file_hash){
+  
+  if (!sbtools::is_logged_in()){
+    
+    sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
+    sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
+    
+  }
+  
+  hashed_filenames <- c()
+  if (!missing(file_hash)){
+    hashed_filenames <- yaml.load_file(file_hash) %>% names %>% sort() %>% rev()
+    for (file in hashed_filenames){
+      item_replace_files(sb_id, files = file)
+    }
+  }
+  files <- c(...)
+  if (length(files) > 0){
+    item_replace_files(sb_id, files = files)
+  }
+  
+}
+
+
 # Helper function to create a task_table for the files that need to be pushed to SB
 do_item_replace_tasks <- function(sb_id, files, sources) {
   
@@ -174,29 +199,5 @@ sb_render_post_xml <- function(sb_id, ..., xml_file = NULL){
   render(filename = xml_file, ...)
   
   sb_replace_files(sb_id = sb_id, xml_file)
-  
-}
-
-
-sb_replace_files <- function(sb_id, ..., file_hash){
-  
-  if (!sbtools::is_logged_in()){
-    
-    sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
-    sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
-    
-  }
-  
-  hashed_filenames <- c()
-  if (!missing(file_hash)){
-    hashed_filenames <- yaml.load_file(file_hash) %>% names %>% sort() %>% rev()
-    for (file in hashed_filenames){
-      item_replace_files(sb_id, files = file)
-    }
-  }
-  files <- c(...)
-  if (length(files) > 0){
-    item_replace_files(sb_id, files = files)
-  }
   
 }

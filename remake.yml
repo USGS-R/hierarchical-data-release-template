@@ -63,7 +63,7 @@ targets:
 
   ### Push all spatial data + metadata xml to sb
   log/01_spatial_sb_data.csv:
-    command: sb_replace_files_log(
+    command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_01_spatial,
       sources = "src/sb_utils.R",
@@ -83,7 +83,7 @@ targets:
   
   ## Push all obs data + metadata xml to sb via log file 
   log/02_observations_sb_data.csv:
-    command: sb_replace_files_log(
+    command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_02_observations,
       sources = "src/sb_utils.R",
@@ -103,7 +103,7 @@ targets:
   
   ## Push all driver data + metadata xml to sb via log file 
   log/03_drivers_sb_data.csv:
-    command: sb_replace_files_log(
+    command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_03_drivers,
       sources = 'src/sb_utils.R',
