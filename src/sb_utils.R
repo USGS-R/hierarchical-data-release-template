@@ -20,6 +20,16 @@
 #' I would suggest keeping every function and variable you need in one source file for this pattern
 sb_replace_files_log <- function(filename, sb_id, ..., file_hash, sources = c()){
   
+  
+  if (!sbtools::is_logged_in()){
+    
+    sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
+    sbtools::authenticate_sb(username = sb_secret$username,
+                             password = sb_secret$password)
+    
+  }
+  
+  
   files <- c(...)
   
   if (!missing(file_hash)){
@@ -39,7 +49,8 @@ sb_replace_files <- function(sb_id, ..., file_hash){
   if (!sbtools::is_logged_in()){
     
     sb_secret <- dssecrets::get_dssecret("cidamanager-sb-srvc-acct")
-    sbtools::authenticate_sb(username = sb_secret$username, password = sb_secret$password)
+    sbtools::authenticate_sb(username = sb_secret$username,
+                             password = sb_secret$password)
     
   }
   

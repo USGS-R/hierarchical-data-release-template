@@ -125,7 +125,7 @@ targets:
 
   ## Push all forecasts data + metadata xml to sb via log file 
   log/04_forecasts_sb_data.csv:
-    command: sb_replace_files_log(
+    command: sb_replace_files(
       filename = target_name,
       sb_id = sbid_04_forecasts,
       sources = 'src/sb_utils.R',
