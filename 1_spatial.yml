@@ -17,12 +17,17 @@ targets:
       - geospatial_area_metadata
   
   # create target of spatial file
+  # please note that the extract_feature function (below) from the meddle package must be run to create certain pieces of spatial metadata
+  # if you are not uploading any spatial data files to your data release,
+  # you will need to find a shapefile that represents the geographic area or your data release
+  # upload this file to your pipeline repostiory, read it in with the read_spatial_file function below, and extract_feature will pull the necessary metadata
+  # you do NOT need to upload this file to ScienceBase  with the sf_to_zip function if it was not a planned part of your data release
   geospatial_area_WG84:
     command: read_spatial_file(path = 'in_data/example_data/drb_shp/physiographic_regions_DRB.shp', selected_crs = 4326)
 
-  # grab metadata   
-  geospatial_area_metadata:
-    command: extract_feature(geospatial_area_WG84)
+  # grab metadata from spatial file
+geospatial_area_metadata:
+    command: meddle::extract_feature(geospatial_area_WG84)
     
   # Output geospatial area shp
   out_data/XX_geospatial_area_WG84.zip:
