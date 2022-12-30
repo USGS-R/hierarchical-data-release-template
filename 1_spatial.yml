@@ -27,7 +27,7 @@ targets:
 
   # grab metadata from spatial file
 geospatial_area_metadata:
-    command: extract_feature(geospatial_area_WG84)
+    command: meddle::extract_feature(geospatial_area_WG84)
     
   # Output geospatial area shp
   out_data/XX_geospatial_area_WG84.zip:
