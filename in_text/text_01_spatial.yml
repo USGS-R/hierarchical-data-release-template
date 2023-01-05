@@ -18,6 +18,7 @@ cross-cites:
     pubdate: XXXX - year of publication for cited item
     link: http://doi.org/YY.XXXXX/XXXXXX
 
+# ----entity and attribute information---- 
 entities:
   -
     data-name: XX_spatial1.zip
