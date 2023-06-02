@@ -1,3 +1,5 @@
+Active development moved to https://code.usgs.gov/wma/wp/data-releases/hierarchical-data-release-template
+
 # hierarchical-data-release-template
 
 ## code
